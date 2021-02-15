@@ -1,18 +1,18 @@
-﻿using Apex.AI;
+using Apex.AI;
 
-public sealed class HasAttackTargetOutsideScanRange : ContextualScorerBase<EnemyContext>
+public sealed class HasAttackTargetOutsideScanRange : ContextualScorerBase<ContextBase>
 {
-    public override float Score(EnemyContext context)
+    public override float Score(ContextBase context)
     {
-        var entity = context.entity;
+        var entity = context.Entity;
 
-        var attackTarget = entity.attackTarget;
+        var attackTarget = entity.CurrentAttackTarget;
         if (attackTarget == null) {
             return 0f;
         }
 
-        var distance = (entity.position - attackTarget.position).sqrMagnitude;
-        if (distance > (entity.entityScanRange * entity.entityScanRange)) {
+        var distance = (entity.Position - attackTarget.Position).sqrMagnitude;
+        if (distance > (entity.EntityScanRange * entity.EntityScanRange)) {
             return score;
         }
 

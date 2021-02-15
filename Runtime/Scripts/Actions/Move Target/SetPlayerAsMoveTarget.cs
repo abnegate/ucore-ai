@@ -1,11 +1,11 @@
-﻿using Apex.AI;
+using Apex.AI;
 
-public class SetPlayerAsMoveTarget : ActionBase<EnemyContext>
+public class SetPlayerAsMoveTarget : ActionBase<ContextBase>
 {
-    public override void Execute(EnemyContext context)
+    public override void Execute(ContextBase context)
     {
-        var entity = context.entity;
-        var playerPos = entity.attackTarget.position;
-        entity.moveTarget = playerPos;
+        var entity = context.Entity;
+        var playerPos = entity.CurrentAttackTarget.Position;
+        entity.CurrentMoveTarget = playerPos;
     }
 }

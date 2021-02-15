@@ -1,4 +1,4 @@
-﻿namespace UCore.Entities
+namespace UCore.Entities
 {
     public interface IStealthAIEntity : IAIEntity
     {

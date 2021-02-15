@@ -1,11 +1,10 @@
-﻿using System.Diagnostics;
 using Apex.AI;
 using Apex.Serialization;
 
 /// <summary>
 /// An AI scorer for evaluating whether the entity's attack target is visible or not, within the given range.
 /// </summary>
-public sealed class IsAttackTargetVisible : ContextualScorerBase<EnemyContext>
+public sealed class IsAttackTargetVisible : ContextualScorerBase<ContextBase>
 {
     [ApexSerialization, FriendlyName("Not", "Set to true to reverse the logic of the scorer")]
     public bool not = false;
@@ -19,26 +18,27 @@ public sealed class IsAttackTargetVisible : ContextualScorerBase<EnemyContext>
     [ApexSerialization, FriendlyName("Custom Range", "Input a custom range here (if not using scan or attack range"), MemberDependency("useScanRange", false), MemberDependency("useAttackRange", false)]
     public float customRange = 10f;
 
-    public override float Score(EnemyContext context)
+    public override float Score(ContextBase context)
     {
-        var entity = context.entity;
+        var entity = context.Entity;
 
-        var attackTarget = entity.attackTarget;
+        var attackTarget = entity.CurrentAttackTarget;
         if (attackTarget == null) {
             return 0f;
         }
 
         var range = customRange;
         if (useScanRange) {
-            range = entity.entityScanRange;
+            range = entity.EntityScanRange;
         } else if (useAttackRange) {
-            range = entity.attackRange;
+            range = entity.AttackRange;
         }
 
         var visibility = ApexUtils.IsVisible(
-            entity.position,
-            entity.attackTarget.position,
-            range);
+            entity.Position,
+            entity.CurrentAttackTarget.Position,
+            range,
+            entity.CurrentAttackTarget.GameObject.layer);
 
         if (visibility) {
             return not ? 0f : score;

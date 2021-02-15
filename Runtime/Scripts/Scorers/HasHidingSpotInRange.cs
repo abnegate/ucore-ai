@@ -1,19 +1,19 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Apex.AI;
 using Apex.Serialization;
 using UnityEngine;
 
-public class HasHidingSpotInRange : ContextualScorerBase<EnemyContext>
+public class HasHidingSpotInRange : ContextualScorerBase<ContextBase>
 {
     [ApexSerialization, FriendlyName("Not", "Set to true to reverse the logic of the scorer")]
     public bool not = false;
 
     public float range;
 
-    public override float Score(EnemyContext context)
+    public override float Score(ContextBase context)
     {
-        var hidingSpots = context.hidingSpots;
+        var hidingSpots = context.HidingSpots;
         if (hidingSpots == null
             || hidingSpots.Count == 0) {
             return not ? score : 0f;
@@ -22,7 +22,7 @@ public class HasHidingSpotInRange : ContextualScorerBase<EnemyContext>
         var distances = new List<float>();
         for (int i = 0; i < hidingSpots.Count; i++) {
             distances.Add(Vector3.Distance(
-                context.entity.position,
+                context.Entity.Position,
                 hidingSpots[i]));
         }
         if (distances.Any(distance => distance <= range)) {

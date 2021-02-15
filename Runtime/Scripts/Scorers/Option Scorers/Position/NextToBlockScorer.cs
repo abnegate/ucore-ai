@@ -1,4 +1,4 @@
-﻿using Apex.AI;
+using Apex.AI;
 using Apex.Serialization;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,14 +7,14 @@ using UnityEngine.AI;
 /// <summary>
 /// An AI option scorer for scoring options of type 'Vector3' (positions). 
 /// </summary>
-public sealed class NextToBlockScorer : OptionScorerWithScore<Vector3, EnemyContext>
+public sealed class NextToBlockScorer : OptionScorerWithScore<Vector3, ContextBase>
 {
     [ApexSerialization]
     public float samplingDistance = 1f;
 
-    public override float Score(EnemyContext context, Vector3 pos)
+    public override float Score(ContextBase context, Vector3 pos)
     {
-        var layer = context.entity.navMeshAgent.areaMask;
+        var layer = context.Entity.NavMeshAgent.areaMask;
 
         // Sample in 4 directions (not diagonal) and use the NavMesh for sampling the position with a very small threshold (Mathf.Epsilon)
         var p1 = new Vector3(pos.x - samplingDistance, 0f, pos.z);

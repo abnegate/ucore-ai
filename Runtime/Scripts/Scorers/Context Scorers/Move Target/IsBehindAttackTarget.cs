@@ -1,23 +1,23 @@
-﻿using Apex.AI;
+using Apex.AI;
 using Apex.Serialization;
 using UnityEngine;
 
-public class IsBehindAttackTarget : ContextualScorerBase<EnemyContext>
+public class IsBehindAttackTarget : ContextualScorerBase<ContextBase>
 {
     [ApexSerialization, FriendlyName("Not", "Set to true to reverse the logic of the scorer")]
     public bool not = false;
 
-    public override float Score(EnemyContext context)
+    public override float Score(ContextBase context)
     {
-        var entity = context.entity;
+        var entity = context.Entity;
 
-        var attackTarget = entity.attackTarget;
+        var attackTarget = entity.CurrentAttackTarget;
         if (attackTarget == null) {
             return 0f;
         }
 
-        var entityForward = entity.gameObject.transform.forward;
-        var playerForward = entity.attackTarget.gameObject.transform.forward;
+        var entityForward = entity.GameObject.transform.forward;
+        var playerForward = entity.CurrentAttackTarget.GameObject.transform.forward;
 
         var dot = Vector3.Dot(entityForward, playerForward);
 
@@ -26,7 +26,7 @@ public class IsBehindAttackTarget : ContextualScorerBase<EnemyContext>
 
         var angle = Mathf.Atan2(det, dot) * Mathf.Rad2Deg;
 
-        var halfFieldOfView = entity.fieldOfView * 0.5f;
+        var halfFieldOfView = entity.FieldOfView * 0.5f;
 
         var facingSameDirection = (angle >= 0 && angle <= halfFieldOfView)
             || (angle >= 360 - halfFieldOfView && angle <= 360);

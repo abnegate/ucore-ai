@@ -1,21 +1,23 @@
-﻿using Apex.AI;
+using Apex.AI;
+using UCore.Entities;
 using UnityEngine;
 
 /// <summary>
 /// This AI action handles the scanning of other entities by using Unity's OverlapSphere and adding an observation for each other valid entity, including recording the visibility state.
 /// </summary>
-public sealed class ScanForEntities : ActionBase<EnemyContext>
+public sealed class ScanForEntities : ActionBase<ContextBase>
 {
-    public override void Execute(EnemyContext context)
+    public override void Execute(ContextBase context)
     {
-        var entity = context.entity;
+        var entity = context.Entity;
 
         var entityManager = EntityManager.instance;
 
+        // TODO: Update layers to alloq multi-type scanning
         var hits = Physics.OverlapSphere(
-            entity.position,
-            entity.entityScanRange,
-            LayersManager.instance.enemiesLayer);
+            entity.Position,
+            entity.EntityScanRange,
+            context.Entity.GameObject.layer);
         for (int i = 0; i < hits.Length; i++) {
             var hit = hits[i];
 
@@ -28,14 +30,19 @@ public sealed class ScanForEntities : ActionBase<EnemyContext>
                 continue;
             }
 
-            if (hitEntity.isDead) {
+            if (hitEntity.IsDead) {
                 continue;
             }
 
-            var visibility = ApexUtils.IsVisible(entity.position, hitEntity.position, entity.entityScanRange);
+            var visibility = ApexUtils.IsVisible(
+                entity.Position,
+                hitEntity.Position,
+                entity.EntityScanRange,
+                context.Entity.GameObject.layer);
 
             var observation = new Observation(hitEntity, visibility);
-            context.memory.AddOrUpdateObservation(observation);
+
+            context.Memory.AddOrUpdateObservation(observation);
         }
     }
 }

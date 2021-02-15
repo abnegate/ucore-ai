@@ -20,7 +20,7 @@ public class Observation
     /// <param name="entity">The entity.</param>
     /// <param name="isVisible">if set to <c>true</c> the observation is visible, otherwise false.</param>
     public Observation(IEntity entity, bool isVisible)
-        : this(entity, entity.position, isVisible, Time.time) { }
+        : this(entity, entity.Position, isVisible, Time.time) { }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Observation"/> class.

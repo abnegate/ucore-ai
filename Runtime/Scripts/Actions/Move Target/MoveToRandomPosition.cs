@@ -1,4 +1,4 @@
-﻿using Apex.AI;
+using Apex.AI;
 using Apex.Serialization;
 using UnityEngine;
 using UnityEngine.AI;
@@ -6,7 +6,7 @@ using UnityEngine.AI;
 /// <summary>
 /// This AI action makes the entity move to a randomly calculated walkable position, optionally also sets a move target.
 /// </summary>
-public sealed class MoveToRandomPosition : ActionBase<EnemyContext>
+public sealed class MoveToRandomPosition : ActionBase<ContextBase>
 {
     [ApexSerialization, FriendlyName("Destination Range", "How far away the random position should be in units/meters")]
     public float destinationRange = 10f;
@@ -17,16 +17,16 @@ public sealed class MoveToRandomPosition : ActionBase<EnemyContext>
     [ApexSerialization, FriendlyName("Set Move Target", "Set to true to also set move target in addition to issuing a move command")]
     public bool setMoveTarget = true;
 
-    public override void Execute(EnemyContext context)
+    public override void Execute(ContextBase context)
     {
 
-        var entity = context.entity;
+        var entity = context.Entity;
         var range = Mathf.Max(1f, destinationRange);
-        var randomPos = entity.position + (Random.onUnitSphere * range);
+        var randomPos = entity.Position + (Random.onUnitSphere * range);
 
-        randomPos.y = entity.position.y;
+        randomPos.y = entity.Position.y;
 
-        int mask = entity.navMeshAgent.areaMask;
+        int mask = entity.NavMeshAgent.areaMask;
         if (!NavMesh.SamplePosition(
             randomPos,
             out var hit,
@@ -36,7 +36,7 @@ public sealed class MoveToRandomPosition : ActionBase<EnemyContext>
         }
 
         if (setMoveTarget) {
-            entity.moveTarget = hit.position;
+            entity.CurrentMoveTarget = hit.position;
         }
 
         entity.MoveTo(hit.position);

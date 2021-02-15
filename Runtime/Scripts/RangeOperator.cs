@@ -1,4 +1,4 @@
-﻿public enum RangeOperator
+public enum RangeOperator
 {
     None = 0,
     LessThan,

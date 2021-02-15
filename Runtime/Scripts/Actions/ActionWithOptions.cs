@@ -1,4 +1,4 @@
-﻿using Apex.AI;
+using Apex.AI;
 
 public abstract class ActionWithOptions<T1, T2> : ActionWithOptions<T1>
     where T2 : IAIContext

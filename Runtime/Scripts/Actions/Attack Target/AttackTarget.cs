@@ -1,29 +1,27 @@
-﻿using Apex.AI;
+using Apex.AI;
 using Apex.Serialization;
-using UnityEngine;
 
 /// <summary>
 /// An AI action which makes the context unit attack its target and optionally set it to face towards the attack target.
 /// </summary>
-public sealed class AttackTarget : ActionBase<EnemyContext>
+public sealed class AttackTarget : ActionBase<ContextBase>
 {
     [ApexSerialization, FriendlyName("Set Facing", "Whether to also rotate the entity so that it faces towards the attack target")]
     public bool setFacing = true;
 
-    public override void Execute(EnemyContext context)
+    public override void Execute(ContextBase context)
     {
-        var entity = context.entity;
-        if (entity.attackTarget == null) {
+        var entity = context.Entity;
+        if (entity.CurrentAttackTarget == null) {
             return;
         }
 
         if (setFacing) {
-            var lookAtPos = entity.position;
-            lookAtPos.y = entity.position.y;
-            entity.gameObject.transform.LookAt(lookAtPos);
+            var lookAtPos = entity.Position;
+            lookAtPos.y = entity.Position.y;
+            entity.GameObject.transform.LookAt(lookAtPos);
         }
 
-        Debug.Log("Attacking player");
-        entity.AttackTarget(entity.attackTarget);
+        entity.AttackTarget(entity.CurrentAttackTarget);
     }
 }

@@ -1,17 +1,17 @@
-﻿using Apex.AI;
+using Apex.AI;
 using Apex.Serialization;
 
 /// <summary>
 /// An AI scorer for evaluating whether the entity has any patrol points or not.
 /// </summary>
-public sealed class HasPatrolPoints : ContextualScorerBase<EnemyContext>
+public sealed class HasPatrolPoints : ContextualScorerBase<ContextBase>
 {
     [ApexSerialization, FriendlyName("Not", "Set to true to reverse the logic of the scorer")]
     public bool not = false;
 
-    public override float Score(EnemyContext context)
+    public override float Score(ContextBase context)
     {
-        var patrolPoints = context.entity.patrolPoints;
+        var patrolPoints = context.Entity.PatrolPoints;
         if (patrolPoints != null && patrolPoints.Length > 0) {
             return not ? 0f : score;
         }

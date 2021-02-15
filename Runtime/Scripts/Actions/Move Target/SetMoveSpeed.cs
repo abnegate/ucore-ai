@@ -1,14 +1,14 @@
-﻿using Apex.AI;
+using Apex.AI;
 using Apex.Serialization;
 
-public class SetMoveSpeed : ActionBase<EnemyContext>
+public class SetMoveSpeed : ActionBase<ContextBase>
 {
     [ApexSerialization, FriendlyName("Set Move Speed", "Set the movement speed of the entity")]
     public float speed;
 
-    public override void Execute(EnemyContext context)
+    public override void Execute(ContextBase context)
     {
 
-        context.entity.moveSpeed = speed;
+        context.Entity.MoveSpeed = speed;
     }
 }

@@ -1,22 +1,22 @@
-﻿using Apex.AI;
+using Apex.AI;
 using Apex.Serialization;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MoveToRandomPatrolPoint : ActionBase<EnemyContext>
+public class MoveToRandomPatrolPoint : ActionBase<ContextBase>
 {
     [ApexSerialization, FriendlyName("Set Move Target", "Set to true to also set move target in addition to issuing a move command")]
     public bool setMoveTarget = true;
 
-    public override void Execute(EnemyContext context)
+    public override void Execute(ContextBase context)
     {
-        var entity = context.entity;
-        var index = Random.Range(0, entity.patrolPoints.Length);
-        var randomPatrolPos = entity.patrolPoints[index];
+        var entity = context.Entity;
+        var index = Random.Range(0, entity.PatrolPoints.Length);
+        var randomPatrolPos = entity.PatrolPoints[index];
 
-        randomPatrolPos.y = entity.position.y;
+        randomPatrolPos.y = entity.Position.y;
 
-        int mask = entity.navMeshAgent.areaMask;
+        int mask = entity.NavMeshAgent.areaMask;
         if (!NavMesh.SamplePosition(
             randomPatrolPos,
             out var hit,
@@ -26,7 +26,7 @@ public class MoveToRandomPatrolPoint : ActionBase<EnemyContext>
         }
 
         if (setMoveTarget) {
-            entity.moveTarget = hit.position;
+            entity.CurrentMoveTarget = hit.position;
         }
 
         entity.MoveTo(hit.position);

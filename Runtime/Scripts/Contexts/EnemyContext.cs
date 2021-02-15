@@ -1,22 +1,21 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Apex.AI;
-using UCore.Entities;
 using UnityEngine;
 
-public sealed class EnemyContext : IAIContext
+public class ContextBase : IAIContext
 {
-    public EnemyContext(IAIEntity entity)
+    public ContextBase(IAIEntity entity)
     {
-        this.entity = entity;
-        sampledPositions = new List<Vector3>(64);
-        memory = new AIMemory();
+        Entity = entity;
+        SampledPositions = new List<Vector3>(64);
+        Memory = new AIMemory();
     }
 
-    public IAIEntity entity { get; private set; }
+    public IAIEntity Entity { get; private set; }
 
-    public AIMemory memory { get; private set; }
+    public AIMemory Memory { get; private set; }
 
-    public List<Vector3> sampledPositions { get; private set; }
+    public List<Vector3> SampledPositions { get; private set; }
 
-    public List<Vector3> hidingSpots { get; private set; }
+    public List<Vector3> HidingSpots { get; private set; }
 }

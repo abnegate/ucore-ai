@@ -1,22 +1,22 @@
-﻿using Apex.AI;
+using Apex.AI;
 using Apex.Serialization;
 
-public class HasPlayerInScanRange : ContextualScorerBase<EnemyContext>
+public class HasPlayerInScanRange : ContextualScorerBase<ContextBase>
 {
     [ApexSerialization, FriendlyName("Not", "Set to true to reverse the logic of the scorer")]
     public bool not = false;
 
-    public override float Score(EnemyContext context)
+    public override float Score(ContextBase context)
     {
-        var entity = context.entity;
-        var attackTarget = entity.attackTarget;
+        var entity = context.Entity;
+        var attackTarget = entity.CurrentAttackTarget;
 
         if (attackTarget == null) {
             return not ? score : 0f;
         }
 
-        var distance = (entity.position - attackTarget.position).sqrMagnitude;
-        if (distance <= context.entity.entityScanRange) {
+        var distance = (entity.Position - attackTarget.Position).sqrMagnitude;
+        if (distance <= context.Entity.EntityScanRange) {
             return not ? 0f : score;
         }
 

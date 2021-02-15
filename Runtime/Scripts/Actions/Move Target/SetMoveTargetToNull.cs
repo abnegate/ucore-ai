@@ -1,12 +1,12 @@
-﻿using Apex.AI;
+using Apex.AI;
 
 /// <summary>
 /// This AI action sets the entity's move target reference to null.
 /// </summary>
-public sealed class SetMoveTargetToNull : ActionBase<EnemyContext>
+public sealed class SetMoveTargetToNull : ActionBase<ContextBase>
 {
-    public override void Execute(EnemyContext context)
+    public override void Execute(ContextBase context)
     {
-        context.entity.moveTarget = null;
+        context.Entity.CurrentMoveTarget = null;
     }
 }

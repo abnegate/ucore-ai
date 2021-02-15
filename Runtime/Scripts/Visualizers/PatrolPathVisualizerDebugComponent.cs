@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Apex.AI.Visualization;
 using UnityEngine;
 
-public class PatrolPathVisualizerDebugComponent : ContextGizmoVisualizerComponent<EnemyContext>
+public class PatrolPathVisualizerDebugComponent : ContextGizmoVisualizerComponent<ContextBase>
 {
     public List<Transform> patrolPoints;
     public Color gizmosColor = Color.red;
@@ -10,15 +10,15 @@ public class PatrolPathVisualizerDebugComponent : ContextGizmoVisualizerComponen
     [Range(0.5f, 4f)]
     public float sphereSize = 1f;
 
-    protected override void DrawGizmos(EnemyContext context)
+    protected override void DrawGizmos(ContextBase context)
     {
-        var patrolPoints = GameObject.FindGameObjectsWithTag(Tags.patrolPoint);
-        if (patrolPoints != null && patrolPoints.Length >= 0) {
-            Gizmos.color = gizmosColor;
+        //var patrolPoints = GameObject.FindGameObjectsWithTag(Tags.patrolPoint);
+        //if (patrolPoints != null && patrolPoints.Length >= 0) {
+        //    Gizmos.color = gizmosColor;
 
-            foreach (var point in patrolPoints) {
-                Gizmos.DrawWireSphere(point.transform.position, sphereSize);
-            }
-        }
+        //    foreach (var point in patrolPoints) {
+        //        Gizmos.DrawWireSphere(point.transform.position, sphereSize);
+        //    }
+        //}
     }
 }

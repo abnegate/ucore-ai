@@ -1,4 +1,4 @@
-﻿using Apex.AI;
+using Apex.AI;
 
 /// <summary>
 /// A specific utility curve scorer for calculating a utility score value depending on the entity's current health
@@ -7,6 +7,6 @@ public sealed class UtilityCurveHealthScorer : UtilityCurveLinearBaseScorer
 {
     public override float Score(IAIContext context)
     {
-        return GetScore(((EnemyContext)context).entity.currentHealth);
+        return GetScore(((ContextBase)context).Entity.CurrentHealth);
     }
 }

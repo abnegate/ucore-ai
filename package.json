@@ -5,8 +5,8 @@
   "description": "UCore AI Tools",
   "unity": "2019.4",
   "dependencies": {
-    "com.jakebarnby.ucore-entities": "git://github.com.abnegate/ucore-entities#1.0.0",
-    "com.jakebarnby.ucore-extensions": "git://github.com.abnegate/ucore-extensions#1.0.0"
+    "com.jakebarnby.ucore-entities": "1.0.0",
+    "com.jakebarnby.ucore-extensions": "1.0.0"
   },
   "keywords": [
     "ucore",

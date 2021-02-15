@@ -1,12 +1,12 @@
-﻿using Apex.AI;
+using Apex.AI;
 
 /// <summary>
 /// This AI action sets the entity's attack target to null
 /// </summary>
-public sealed class SetAttackTargetToNull : ActionBase<EnemyContext>
+public sealed class SetAttackTargetToNull : ActionBase<ContextBase>
 {
-    public override void Execute(EnemyContext context)
+    public override void Execute(ContextBase context)
     {
-        context.entity.attackTarget = null;
+        context.Entity.CurrentAttackTarget = null;
     }
 }

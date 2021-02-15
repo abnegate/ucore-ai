@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Apex.AI;
 using Apex.AI.Visualization;
 using UnityEngine;
@@ -13,7 +13,7 @@ public sealed class PositionScoreVisualizerDebugComponent : ActionWithOptionsVis
 
     protected override IList<Vector3> GetOptions(IAIContext context)
     {
-        return ((EnemyContext)context).sampledPositions;
+        return ((ContextBase)context).SampledPositions;
     }
 
     protected override void DrawGUI(IList<ScoredOption<Vector3>> scoredOptions)

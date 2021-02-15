@@ -1,6 +1,9 @@
 {
     "name": "com.jakebarnby.ucore-ai",
-    "references": [],
+    "references": [ 
+        "com.jakebarnby.ucore-entities", 
+        "com.jakebarnby.ucore-extensions" 
+    ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],

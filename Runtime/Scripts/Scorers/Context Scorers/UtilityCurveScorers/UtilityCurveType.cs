@@ -1,4 +1,4 @@
-﻿public enum UtilityCurveType
+public enum UtilityCurveType
 {
     Linear,
     ReversedLinear,

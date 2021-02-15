@@ -1,4 +1,4 @@
-﻿using Apex.AI;
+using Apex.AI;
 using Apex.Serialization;
 
 /// <summary>

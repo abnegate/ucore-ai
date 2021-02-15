@@ -1,6 +1,5 @@
-﻿using Apex.AI;
+using Apex.AI;
 using Apex.Serialization;
-
 
 /// <summary>
 /// A base class to use for a specific utility curve scorer, utilizing an exponential curve.

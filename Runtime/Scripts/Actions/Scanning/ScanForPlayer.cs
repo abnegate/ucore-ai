@@ -1,29 +1,29 @@
-﻿using Apex.AI;
+using Apex.AI;
 using UnityEngine;
 
-public sealed class ScanForPlayer : ActionBase<EnemyContext>
+public sealed class ScanForPlayer : ActionBase<ContextBase>
 {
-    public override void Execute(EnemyContext context)
+    public override void Execute(ContextBase context)
     {
-        var enemy = context.entity;
+        //var enemy = context.entity;
 
-        var colliders = Physics.OverlapSphere(
-            enemy.position,
-            ((Enemy)enemy).playerScanRange,
-            LayersManager.instance.playerLayer);
+        //var colliders = Physics.OverlapSphere(
+        //    enemy.Position,
+        //    ((Enemy)enemy).playerScanRange,
+        //    LayersManager.instance.playerLayer);
 
-        if (colliders == null
-            || colliders.Length == 0) {
-            return;
-        }
+        //if (colliders == null
+        //    || colliders.Length == 0) {
+        //    return;
+        //}
 
-        var col = colliders[0];
-        if (col == null
-            || col.isTrigger) {
-            return;
-        }
+        //var col = colliders[0];
+        //if (col == null
+        //    || col.isTrigger) {
+        //    return;
+        //}
 
-        context.entity.attackTarget = col.gameObject.GetComponent<Player>();
+        //context.entity.CurrentAttackTarget = col.gameObject.GetComponent<Player>();
     }
 }
 

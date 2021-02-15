@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Apex.AI;
 using Apex.AI.Components;
 using UCore.Entities;
+using UCore.Extensions;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -56,7 +57,7 @@ public class Enemy : MonoBehaviour, IStealthAIEntity, IContextProvider
     #endregion
 
     #region IAIEntity properties
-    public Vector3? MoveTarget { get; set; }
+    public Vector3? CurrentMoveTarget { get; set; }
 
     public float EntityScanRange => playerScanRange;
     public float EntityHearingRange => hearingRange;
@@ -85,7 +86,9 @@ public class Enemy : MonoBehaviour, IStealthAIEntity, IContextProvider
 
     public Vector3 Position => transform.position;
 
-    public EntityType type => EntityType.Zombie;
+    public EntityType Type => EntityType.Any;
+
+    public GameObject GameObject => gameObject;
 
     public float AttackRange => attackingRange;
 
@@ -95,7 +98,7 @@ public class Enemy : MonoBehaviour, IStealthAIEntity, IContextProvider
 
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
 
-    public IEntity AttackTarget { get; set; }
+    public IEntity CurrentAttackTarget { get; set; }
 
     public Vector3[] PatrolPoints => defaultPatrolPoints;
 
@@ -105,7 +108,7 @@ public class Enemy : MonoBehaviour, IStealthAIEntity, IContextProvider
     #endregion
 
     #region Components
-    private EnemyContext _enemyContext;
+    private ContextBase _enemyContext;
     private NavMeshAgent _navMeshAgent;
     private Animator _animator;
     #endregion
@@ -126,15 +129,16 @@ public class Enemy : MonoBehaviour, IStealthAIEntity, IContextProvider
 
     private void Awake()
     {
-        _enemyContext = new EnemyContext(this);
+        _enemyContext = new ContextBase(this);
         _navMeshAgent = GetComponentInChildren<NavMeshAgent>();
         _animator = GetComponentInChildren<Animator>();
         currentStateHash = idleStateHash;
 
-        defaultPatrolPoints = GameObject
-            .FindGameObjectsWithTag(Tags.patrolPoint)
-            .Select(p => p.transform.position)
-            .ToArray();
+        // TODO: Fix reading patrol points
+        //defaultPatrolPoints = GameObject
+        //    .FindGameObjectsWithTag(Tags.patrolPoint)
+        //    .Select(p => p.transform.position)
+        //    .ToArray();
 
         CurrentHealth = MaxHealth;
 
@@ -161,10 +165,9 @@ public class Enemy : MonoBehaviour, IStealthAIEntity, IContextProvider
             transform.position + transform.forward,
             attackSphereCastRadius,
             transform.forward,
-            out var _,
             AttackRange,
             60,
-            LayersManager.instance.playerLayer)) {
+            target.GameObject.layer).Any()) {
             Debug.Log("Cone cast miss!");
             return;
         }
@@ -179,7 +182,7 @@ public class Enemy : MonoBehaviour, IStealthAIEntity, IContextProvider
         }
 
         var damage = UnityEngine.Random.Range(MinDamage, MaxDamage);
-        target.currentHealth -= damage;
+        target.CurrentHealth -= damage;
         Debug.Log("Dealt damage");
     }
 
@@ -223,7 +226,7 @@ public class Enemy : MonoBehaviour, IStealthAIEntity, IContextProvider
                 continue;
             }
             var newObs = new Observation(observations[i], false);
-            _enemyContext.memory.AddOrUpdateObservation(newObs, true);
+            _enemyContext.Memory.AddOrUpdateObservation(newObs, true);
         }
     }
 }

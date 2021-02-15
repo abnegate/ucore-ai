@@ -1,19 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public static class ApexUtils
 {
-    /// <summary>
-    /// Gets whether the supplied 'to' position is visible in relation to the 'from' position, not extending the supplied range.
-    /// </summary>
-    /// <param name="from">From position.</param>
-    /// <param name="to">To position.</param>
-    /// <param name="range">The maximum range.</param>
-    /// <returns>True if the to position is visible and within range of the from position.</returns>
-    public static bool IsVisible(Vector3 from, Vector3 to, float range)
-    {
-        return IsVisible(from, to, range, LayersManager.instance.obstacleLayer);
-    }
-
     /// <summary>
     /// Gets whether the supplied 'to' position is visible in relation to the 'from' position, not extending the supplied range.
     /// </summary>

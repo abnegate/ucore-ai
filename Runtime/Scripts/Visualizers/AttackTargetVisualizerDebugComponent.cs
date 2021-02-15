@@ -1,20 +1,20 @@
-﻿using Apex.AI.Visualization;
+using Apex.AI.Visualization;
 
 using UnityEngine;
 
-public class AttackTargetVisualizerDebugComponent : ContextGizmoVisualizerComponent<EnemyContext>
+public class AttackTargetVisualizerDebugComponent : ContextGizmoVisualizerComponent<ContextBase>
 {
     public Color gizmosColor = Color.red;
 
     [Range(0.5f, 4f)]
     public float sphereSize = 2f;
 
-    protected override void DrawGizmos(EnemyContext context)
+    protected override void DrawGizmos(ContextBase context)
     {
-        var attackTarget = context.entity.attackTarget;
+        var attackTarget = context.Entity.CurrentAttackTarget;
         if (attackTarget != null) {
             Gizmos.color = gizmosColor;
-            Gizmos.DrawWireSphere(attackTarget.position, sphereSize);
+            Gizmos.DrawWireSphere(attackTarget.Position, sphereSize);
         }
     }
 }

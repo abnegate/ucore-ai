@@ -1,21 +1,25 @@
-﻿using Apex.AI;
+using Apex.AI;
 using Apex.Serialization;
 using UCore.Entities;
 
 /// <summary>
 /// An AI option scorer for scoring options of type 'IEntity'. In this case, it scores if the option entity is visible from the context entity, within its scan range.
 /// </summary>
-public sealed class AttackTargetVisibilityScorer : OptionScorerWithScore<IAIEntity, EnemyContext>
+public sealed class AttackTargetVisibilityScorer : OptionScorerWithScore<IEntity, ContextBase>
 {
     [ApexSerialization, FriendlyName("Not", "Set to true to reverse the logic of the scorer")]
     public bool not = false;
 
-    public override float Score(EnemyContext context, IEntity attackTarget)
+    public override float Score(ContextBase context, IEntity attackTarget)
     {
-        var entity = context.entity;
+        var entity = context.Entity;
 
-        // get the visibility from the context entity to the option entity within the context entity's scan range
-        var visibility = ApexUtils.IsVisible(entity.position, attackTarget.position, entity.entityScanRange);
+        // Get the visibility from the context entity to the option entity within the context entity's scan range
+        var visibility = ApexUtils.IsVisible(
+            entity.Position,
+            attackTarget.Position,
+            entity.EntityScanRange,
+            attackTarget.GameObject.layer);
         if (visibility) {
             return not ? 0f : score;
         }

@@ -1,4 +1,4 @@
-﻿using Apex.Serialization;
+using Apex.Serialization;
 
 /// <summary>
 /// A base class to use for a specific utility curve scorer, utilizing a logit (inverse of sigmoidal 'logistic' function) curve.

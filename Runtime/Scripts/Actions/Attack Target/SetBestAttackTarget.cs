@@ -1,15 +1,15 @@
-﻿using Apex.AI;
 using Apex.Utilities;
+using UCore.Entities;
 
 /// <summary>
 /// This AI action evaluates a list of options for best attack target, and sets the one scoring the highest
 /// </summary>
-public sealed class SetBestAttackTarget : ActionWithOptions<IEntity, EnemyContext>
+public sealed class SetBestAttackTarget : ActionWithOptions<IEntity, ContextBase>
 {
-    public override void Execute(EnemyContext context)
+    public override void Execute(ContextBase context)
     {
-        var entity = context.entity;
-        var observations = context.memory.allObservations;
+        var entity = context.Entity;
+        var observations = context.Memory.allObservations;
         var count = observations.Count;
         if (count == 0) {
             return;
@@ -29,7 +29,7 @@ public sealed class SetBestAttackTarget : ActionWithOptions<IEntity, EnemyContex
             return;
         }
 
-        entity.attackTarget = best;
+        entity.CurrentAttackTarget = best;
 
         ListBufferPool.ReturnBuffer(list);
     }

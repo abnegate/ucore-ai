@@ -1,17 +1,17 @@
-﻿using Apex.AI;
+using Apex.AI;
 using Apex.Serialization;
 
 /// <summary>
 /// An AI scorer for evaluating whether the entity has a move target currently.
 /// </summary>
-public sealed class HasMoveTarget : ContextualScorerBase<EnemyContext>
+public sealed class HasMoveTarget : ContextualScorerBase<ContextBase>
 {
     [ApexSerialization, FriendlyName("Not", "Set to true to reverse the logic of the scorer")]
     public bool not = false;
 
-    public override float Score(EnemyContext context)
+    public override float Score(ContextBase context)
     {
-        if (!context.entity.moveTarget.HasValue) {
+        if (!context.Entity.CurrentMoveTarget.HasValue) {
             return not ? score : 0f;
         }
 
