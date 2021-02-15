@@ -1,0 +1,25 @@
+{
+  "name": "com.jakebarnby.ucore-ai",
+  "version": "1.0.0",
+  "displayName": "UCore AI",
+  "description": "UCore AI Tools",
+  "unity": "2019.4",
+  "dependencies": {
+    "com.jakebarnby.ucore-entities": "git://github.com.abnegate/ucore-entities#1.0.0",
+    "com.jakebarnby.ucore-extensions": "git://github.com.abnegate/ucore-extensions#1.0.0"
+  },
+  "keywords": [
+    "ucore",
+    "ai"
+  ],
+  "author": {
+    "name": "Jake Barnby",
+    "email": "jakeb994@gmail.com",
+    "url": "https://github.com/abnegate"
+  },
+  "git": {
+    "url": "https://github.com/abnegate/ucore-ai",
+    "tag": "1.0.0"
+  },
+  "type": "library"
+}
